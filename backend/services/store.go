@@ -2,7 +2,6 @@ package services
 
 import (
 	"fmt"
-	"log"
 	"path/filepath"
 	"strconv"
 	"time"
@@ -20,43 +19,43 @@ func StoreNote() gin.HandlerFunc {
 			ctx.JSON(constants.StatusBadRequest, gin.H{
 				"error": err.Error(),
 			})
-
 			return
 		}
 
-		form, err := ctx.MultipartForm()
-		if err != nil {
+		if err := uploadFile(ctx); err != nil {
 			ctx.JSON(constants.StatusBadRequest, gin.H{
 				"error": err.Error(),
 			})
-
 			return
 		}
-
-		files := form.File["files"]
-		for _, file := range files {
-			timestamp := strconv.FormatInt(time.Now().UnixNano(), 10)
-			ext := filepath.Ext(file.Filename)
-			uniqueFilename := fmt.Sprintf("%s_%s%s",
-				timestamp,
-				filepath.Base(file.Filename[:len(file.Filename)-len(ext)]),
-				ext)
-
-			savePath := "./files/" + uniqueFilename
-
-			if err = ctx.SaveUploadedFile(file, savePath); err != nil {
-				ctx.JSON(constants.StatusBadRequest, gin.H{
-					"error": err.Error(),
-				})
-
-				return
-			}
-		}
-
-		log.Println(note)
 
 		ctx.JSON(constants.StatusOK, gin.H{
 			"note": note,
 		})
 	}
+}
+
+func uploadFile(ctx *gin.Context) error {
+	form, err := ctx.MultipartForm()
+	if err != nil {
+		return err
+	}
+
+	files := form.File["files"]
+	for _, file := range files {
+		timestamp := strconv.FormatInt(time.Now().UnixNano(), 10)
+		ext := filepath.Ext(file.Filename)
+		uniqueFilename := fmt.Sprintf("%s_%s%s",
+			timestamp,
+			filepath.Base(file.Filename[:len(file.Filename)-len(ext)]),
+			ext)
+
+		savePath := "./files/" + uniqueFilename
+
+		if err = ctx.SaveUploadedFile(file, savePath); err != nil {
+			return err
+		}
+	}
+
+	return nil
 }

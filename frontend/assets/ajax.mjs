@@ -3,10 +3,10 @@ import NOTE from "./routes.mjs"
 const METHOD_POST = "POST"
 
 const AJAX = {
-	addNote: async (form) => {
+	addNote: (form) => {
 		const formData = new FormData(form);
 
-		await fetch(NOTE.addNote, {
+		fetch(NOTE.addNote, {
 			method: METHOD_POST,
 			body: formData
 		})

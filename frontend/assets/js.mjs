@@ -1,11 +1,9 @@
 import AJAX from "./ajax.mjs";
 
 $(function() {
-	$("#js-form-note").on("submit", async function(e) {
+	$("#js-form-note").on("submit", function(e) {
 		e.preventDefault();
 
-		await AJAX.addNote(this);
-		console.log(123);
-
+		AJAX.addNote(this);
 	})
 })
