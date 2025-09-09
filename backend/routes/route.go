@@ -1,0 +1,25 @@
+package routes
+
+import (
+	"todo-list/constants"
+	"todo-list/services"
+
+	"github.com/gin-gonic/gin"
+)
+
+func ListRoute(router *gin.Engine) {
+	v1 := router.Group("/v1")
+	{
+		rNote := v1.Group("/note")
+		{
+			rNote.POST("/store", services.StoreNote())
+			rNote.PUT("/update", services.UpdateNote())
+		}
+	}
+
+	router.GET("/ping", func(c *gin.Context) {
+		c.JSON(constants.StatusOK, gin.H{
+			"message": "pong",
+		})
+	})
+}
