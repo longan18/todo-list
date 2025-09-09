@@ -1,9 +1,9 @@
-import AJAX from "./ajax.mjs";
+import FETCH from "./fetch.mjs";
 
 $(function() {
 	$("#js-form-note").on("submit", function(e) {
 		e.preventDefault();
 
-		AJAX.addNote(this);
+		FETCH.addNote(this);
 	})
 })

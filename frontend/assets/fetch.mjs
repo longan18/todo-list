@@ -2,7 +2,7 @@ import NOTE from "./routes.mjs"
 
 const METHOD_POST = "POST"
 
-const AJAX = {
+const FETCH = {
 	addNote: (form) => {
 		const formData = new FormData(form);
 
@@ -20,4 +20,4 @@ const AJAX = {
 	}
 }
 
-export default AJAX
+export default FETCH

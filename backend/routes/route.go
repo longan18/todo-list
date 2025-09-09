@@ -13,7 +13,8 @@ func ListRoute(router *gin.Engine) {
 		rNote := v1.Group("/note")
 		{
 			rNote.POST("/store", services.StoreNote())
-			rNote.PUT("/update", services.UpdateNote())
+			rNote.PUT("/:id/update", services.UpdateNote())
+			rNote.DELETE("/:id/delete", services.UpdateNote())
 		}
 	}
 
