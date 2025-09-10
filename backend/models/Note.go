@@ -40,3 +40,7 @@ func GetList() map[string]Note {
 func Add(n Note) {
 	ListNote[n.ID] = n
 }
+
+func Update(id string, n Note) {
+	ListNote[id] = n
+}

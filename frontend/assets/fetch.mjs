@@ -1,6 +1,7 @@
 import NOTE from "./routes.mjs"
 
 const METHOD_POST = "POST"
+const METHOD_PUT = "PUT"
 const METHOD_DELETE = "DELETE"
 
 const FETCH = {
@@ -20,6 +21,22 @@ const FETCH = {
 			throw error;
 		}
 	},
+	updateNote: async (form, idNote) => {
+		const formData = new FormData(form);
+	
+		try {
+			const response = await fetch(NOTE.updateNote(idNote), {
+				method: METHOD_PUT,
+				body: formData
+			});
+
+			const status = response.status;
+
+			return status;
+		} catch (error) {
+			throw error;
+		}
+	},
 	getList: async () => {
 		try {
 			const response = await fetch(NOTE.listNote, {
@@ -27,7 +44,7 @@ const FETCH = {
 			});
 
 			const data = await response.json();
-			console.log(data)
+
 			return data;
 		} catch (error) {
 			throw error;
