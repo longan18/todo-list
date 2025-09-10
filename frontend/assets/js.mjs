@@ -3,7 +3,7 @@ import ELM from "./element.mjs";
 import FETCH from "./fetch.mjs";
 
 $(function() {
-	FETCH.getList()
+	getList();
 
 	$("#js-form-note").on("submit", async function(e) {
 		e.preventDefault();
@@ -29,3 +29,11 @@ $(function() {
 		}
 	})
 })
+
+const getList = async () => {
+	const { list } = await FETCH.getList()
+
+	$.map(list, function(v, i) {
+		ELM.addRowTable(v);
+	});
+}

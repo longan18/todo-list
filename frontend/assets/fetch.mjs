@@ -20,17 +20,18 @@ const FETCH = {
 			throw error;
 		}
 	},
-	getList: () => {
-		fetch(NOTE.listNote, {
-			method: METHOD_POST,
-		})
-		.then(response => response.json())
-		.then(data => {
-			console.log('Success:', data);
-		})
-		.catch(error => {
-			console.error('Error:', error);
-		});
+	getList: async () => {
+		try {
+			const response = await fetch(NOTE.listNote, {
+				method: METHOD_POST,
+			});
+
+			const data = await response.json();
+			console.log(data)
+			return data;
+		} catch (error) {
+			throw error;
+		}
 	},
 	getNote: async (id) => {
 		try {

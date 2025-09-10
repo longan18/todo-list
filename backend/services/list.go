@@ -12,7 +12,7 @@ func ListNote() gin.HandlerFunc {
 		listNote := models.GetList()
 
 		ctx.JSON(constants.StatusOK, gin.H{
-			"list": listNote,
+			"data": listNote,
 		})
 	}
 }
@@ -30,7 +30,7 @@ func GetNote() gin.HandlerFunc {
 				"message": "Note exists",
 			})
 		}
-		
+
 		note := listNote[id]
 
 		ctx.JSON(constants.StatusOK, gin.H{
