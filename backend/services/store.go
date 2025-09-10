@@ -11,6 +11,8 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+var listFile []models.File
+
 func StoreNote() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		var note models.Note
@@ -29,8 +31,13 @@ func StoreNote() gin.HandlerFunc {
 			return
 		}
 
+		note.SetFile(listFile)
+		note.SetID()
+		models.Add(note)
+
 		ctx.JSON(constants.StatusOK, gin.H{
-			"note": note,
+			"message": "Add note success",
+			"data": note,
 		})
 	}
 }
@@ -42,6 +49,7 @@ func uploadFile(ctx *gin.Context) error {
 	}
 
 	files := form.File["files"]
+
 	for _, file := range files {
 		timestamp := strconv.FormatInt(time.Now().UnixNano(), 10)
 		ext := filepath.Ext(file.Filename)
@@ -55,6 +63,16 @@ func uploadFile(ctx *gin.Context) error {
 		if err = ctx.SaveUploadedFile(file, savePath); err != nil {
 			return err
 		}
+
+		fileNote := models.File{
+			Name: file.Filename,
+			Size: file.Size,
+			Path: savePath,
+		}
+
+		fileNote.SetID()
+
+		listFile = append(listFile, fileNote)
 	}
 
 	return nil

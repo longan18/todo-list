@@ -1,0 +1,6 @@
+const STATUS = {
+	STATUS_OK: 200,
+	STATUS_BAD_GATEWAY: 504
+}
+
+export default STATUS
