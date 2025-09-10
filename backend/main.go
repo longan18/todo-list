@@ -12,7 +12,10 @@ func main() {
 
 	router.Use(middlewares.CORSMiddleware())
 
+	// Serve static files
+	ServeStatic(router)
+
 	routes.ListRoute(router)
 
-	router.Run()
+	router.Run(":8090")
 }
