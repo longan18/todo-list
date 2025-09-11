@@ -1,0 +1,39 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: todo-backend
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./backend:/app
+      - /app/tmp
+    environment:
+      - GIN_MODE=debug
+    networks:
+      - todo-network
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: todo-frontend
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+    networks:
+      - todo-network
+    restart: unless-stopped
+
+networks:
+  todo-network:
+    driver: bridge
+
+volumes:
+  backend-files:
+    driver: local

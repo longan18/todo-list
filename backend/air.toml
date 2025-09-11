@@ -1,0 +1,14 @@
+root = "."
+tmp_dir = "tmp"
+include_ext = ["go", "tpl", "tmpl", "html"]
+exclude_dir = ["vendor", "node_modules", "tmp"]
+exclude_file = []
+build_delay = 200
+log = "stdout"
+color = "auto"
+test_on_save = false
+[build]
+  cmd = "go build -o ./tmp/main ."
+  bin = "tmp/main"
+  full_bin = "true"
+  delay = 100
