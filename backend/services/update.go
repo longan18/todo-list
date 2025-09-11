@@ -1,7 +1,6 @@
 package services
 
 import (
-	"log"
 	"todo-list/constants"
 	"todo-list/models"
 
@@ -30,8 +29,6 @@ func UpdateNote() gin.HandlerFunc {
 			})
 			return
 		}
-
-		log.Println(note)
 
 		if err := uploadFile(ctx); err != nil {
 			ctx.JSON(constants.StatusBadRequest, gin.H{
